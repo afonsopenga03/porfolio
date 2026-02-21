@@ -1,0 +1,137 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<header> 
+ 
+
+</header>
+   
+<section id="skills" class="page-content px-6 max-w-7xl mx-auto py-12 ">
+    <div class="mb-16">
+        <h2 class="text-4xl md:text-6xl font-black mb-4 uppercase tracking-tighter">Stack Técnica</h2>
+        <div class="h-1 w-20 bg-cyan-500"></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="bg-[#0a0a0a] border border-white/10 p-8 rounded-3xl hover:border-cyan-500/40 transition-all duration-500 group">
+            <h3 class="text-cyan-400 font-bold uppercase tracking-widest mb-6">Design & Criatividade</h3>
+            <ul class="space-y-6">
+                <li>
+                    <h4 class="text-white font-semibold italic">Adobe Photoshop</h4>
+                    <p class="text-slate-500 text-sm">Edição e manipulação avançada de imagens.</p>
+                </li>
+                <li>
+                    <h4 class="text-white font-semibold italic">Adobe Illustrator</h4>
+                    <p class="text-slate-500 text-sm">Criação de vetores e logotipos.</p>
+                </li>
+                <li>
+                    <h4 class="text-white font-semibold italic">Adobe After Effects</h4>
+                    <p class="text-slate-500 text-sm">Motion graphics e animações.</p>
+                </li>
+                <li>
+                    <h4 class="text-white font-semibold italic">Adobe InDesign</h4>
+                    <p class="text-slate-500 text-sm">Diagramação e design editorial.</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bg-[#0a0a0a] border border-white/10 p-8 rounded-3xl hover:border-purple-500/40 transition-all duration-500">
+            <h3 class="text-purple-400 font-bold uppercase tracking-widest mb-6">Frontend</h3>
+            <div class="space-y-6">
+                <div>
+                    <span class="text-xs text-slate-500 block mb-2 uppercase">Linguagens</span>
+                    <p class="text-white font-bold">HTML5 & CSS3</p>
+                </div>
+                <div>
+                    <span class="text-xs text-slate-500 block mb-2 uppercase">Frameworks</span>
+                    <p class="text-white font-bold">Tailwind CSS & Bootstrap</p>
+                </div>
+                <div class="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                    <span class="text-xs text-purple-400 block mb-1 uppercase font-bold tracking-tighter">Destaque</span>
+                    <p class="text-white font-bold">JavaScript (Base sólida)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-[#0a0a0a] border border-white/10 p-8 rounded-3xl hover:border-emerald-500/40 transition-all duration-500">
+            <h3 class="text-emerald-400 font-bold uppercase tracking-widest mb-6">Backend</h3>
+            <p class="text-slate-500 text-sm mb-8">Desenvolvimento de lógica de servidor (Nível Intermediário).</p>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-4 bg-white/5 rounded-xl text-center">
+                    <span class="text-white font-bold block">Python</span>
+                </div>
+                <div class="p-4 bg-white/5 rounded-xl text-center">
+                    <span class="text-white font-bold block">Django</span>
+                </div>
+                <div class="p-4 bg-white/5 rounded-xl text-center col-span-2">
+                    <span class="text-white font-bold block italic">PostgreSQL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p>
+    </p>
+
+<style>
+.boss{margin-top:20px;}
+
+</style>
+  <div class=" boss bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-8 rounded-3xl hover:border-emerald-500/40 transition-all duration-500 group shadow-sm hover:shadow-2xl hover:shadow-emerald-500/10">
+    <section class="skill">
+        <h3 class="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest mb-8 text-sm italic">Soft & Hard Skills</h3>
+        
+        <ul class="space-y-8">
+            <li class="skills-item">
+                <div class="flex justify-between items-end mb-3">
+                    <h5 class="text-slate-900 dark:text-white font-bold tracking-tight uppercase text-xs">Designer Gráfico</h5>
+                    <data value="98" class="text-emerald-500 font-mono text-sm font-bold">98%</data>
+                </div>
+                <div class="h-2 w-full bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(16,185,129,0.3)]" 
+                         style="width: 98%;"></div>
+                </div>
+            </li>
+
+            <li class="skills-item">
+                <div class="flex justify-between items-end mb-3">
+                    <h5 class="text-slate-900 dark:text-white font-bold tracking-tight uppercase text-xs">Motion Design</h5>
+                    <data value="70" class="text-emerald-500 font-mono text-sm font-bold">70%</data>
+                </div>
+                <div class="h-2 w-full bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(16,185,129,0.3)]" 
+                         style="width: 70%;"></div>
+                </div>
+            </li>
+
+            <li class="skills-item">
+                <div class="flex justify-between items-end mb-3">
+                    <h5 class="text-slate-900 dark:text-white font-bold tracking-tight uppercase text-xs">Branding</h5>
+                    <data value="90" class="text-emerald-500 font-mono text-sm font-bold">90%</data>
+                </div>
+                <div class="h-2 w-full bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(16,185,129,0.3)]" 
+                         style="width: 90%;"></div>
+                </div>
+            </li>
+
+            <li class="skills-item">
+                <div class="flex justify-between items-end mb-3">
+                    <h5 class="text-slate-900 dark:text-white font-bold tracking-tight uppercase text-xs">Web Developer</h5>
+                    <data value="80" class="text-emerald-500 font-mono text-sm font-bold">80%</data>
+                </div>
+                <div class="h-2 w-full bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(16,185,129,0.3)]" 
+                         style="width: 80%;"></div>
+                </div>
+            </li>
+        </ul>
+    </section>
+</div>
+</section>
+
+
+
+{% endblock %}

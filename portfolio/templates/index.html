@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section id="home" class="active px-6 max-w-7xl mx-auto py-12 md:py-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        <div class="order-2 md:order-1 text-center md:text-left">
+               <h2 class="text-cyan-400 font-mono mb-4 tracking-tighter">Olá, meu nome é Afonso Penga</h2>
+           
+                 <h1 class="text-5xl md:text-8xl font-black leading-none mb-6 tracking-tighter text-white">
+                Designer <br> <span class="text-slate-600">&</span> Developer
+            </h1>
+            {% comment %} 
+           <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight">
+            Design que <span class="italic font-light">funciona</span>.<br>
+            Código que <span class="text-cyan-500 underline">encanta</span>.
+        </h1>
+        {% endcomment %}
+            <p class="text-slate-400 text-lg md:text-xl max-w-md mb-8 mx-auto md:mx-0">
+                Design Engineer focado em interfaces de alto impacto e arquitetura Python/Django.
+            </p>
+            <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                <a href="{% url "skills" %}" class="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-cyan-500 hover:text-white transition-all duration-300">
+                    Explorar Skills
+                </a>
+            </div>
+        </div>
+
+        <div class="order-1 md:order-2 relative">
+            <div class="aspect-square max-w-[300px] md:max-w-none mx-auto bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full border border-white/5 flex items-center justify-center backdrop-blur-3xl relative overflow-hidden">
+                
+                <div class="text-white/20 font-black text-xl md:text-2xl uppercase tracking-[1em] rotate-0 absolute">
+                    <img src="{% static "aaa.png" %}">
+                </div>
+
+                </div>
+            
+            <div class="absolute -inset-4 bg-cyan-500/5 rounded-full blur-3xl -z-10"></div>
+        </div>
+
+    </div>
+</section>
+     <section id="sobre" class="page-content px-6 max-w-7xl mx-auto py-12">
+            <div class="max-w-3xl">
+                <h2 class="text-4xl md:text-6xl font-bold mb-8">Minha Jornada</h2>
+                <p class="text-slate-400 text-xl leading-relaxed mb-6">
+                    Com mais de 5 anos de experiência, eu não apenas escrevo código; eu projeto sistemas que as pessoas amam usar. 
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12">
+                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                        <h4 class="text-cyan-400 text-3xl font-bold">12+</h4>
+                        <p class="text-sm text-slate-500 uppercase mt-2">Projetos Ativos</p>
+                    </div>
+                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                        <h4 class="text-purple-400 text-3xl font-bold">50+</h4>
+                        <p class="text-sm text-slate-500 uppercase mt-2">Clientes Felizes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="projetos" class="page-content px-6 max-w-7xl mx-auto py-12">
+    <h2 class="text-4xl font-black mb-12 uppercase italic">Portfolio_</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+        <div class="group relative aspect-video bg-slate-900 rounded-3xl border border-white/5 overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center text-slate-700">Preview Project</div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition duration-500 p-8 flex flex-col justify-end">
+                <h3 class="text-xl font-bold">Nome do Projeto</h3>
+                <p class="text-sm text-slate-400">Clique para ver mais</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

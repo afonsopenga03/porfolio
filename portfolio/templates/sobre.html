@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content  %}
+
+
+ 
+
+<section id="sobre" class="page-content px-6 max-w-7xl mx-auto py-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+        <div class="relative">
+            <div class="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-cyan-500"></div>
+            <div class="bg-gradient-to-br from-slate-800 to-slate-900 aspect-[4/5] rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition duration-700 shadow-2xl">
+                <div class="w-full h-full flex items-center justify-center text-slate-700 italic">Sua Foto</div>
+            </div>
+            <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-purple-500"></div>
+        </div>
+
+        <div>
+            <h2 class="text-4xl md:text-6xl font-black mb-8 uppercase tracking-tighter">Minha <span class="text-cyan-500">Essência.</span></h2>
+            <div class="space-y-6 text-slate-400 text-lg leading-relaxed">
+                <p>
+                  Olá, sou Afonso Penga, Designer gráfico com 6+ anos de experiência em criação de logotipos, branding, design publicitário e produção digital em softwares da Adobe, incluindo Photoshop, Illustrator, InDesign e After Effects. 
+                    
+                </p>
+                <p>
+                   Atuo também como Frontend Web Developer com foco em interfaces modernas e responsivas, utilizando HTML, CSS, Bootstrap e Tailwind 
+                </p>
+                <p>
+                    Como desenvolvedor com foco em **Django e Python**, busco construir estruturas robustas no backend que sustentam experiências de usuário fluidas e memoráveis no frontend. 
+                </p>
+                
+                <div class="pt-8 grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-white font-bold mb-2">Visão de Designer</h4>
+                        <p class="text-sm">Pixel perfect, hierarquia visual e tipografia estratégica.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2">Mente de Dev</h4>
+                        <p class="text-sm">Código limpo, performance e escalabilidade de dados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock  %}
+

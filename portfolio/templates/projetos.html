@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="px-6 max-w-7xl mx-auto py-12" x-data="{ activeCategory: 'todos' }">
+    
+    <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter">Projetos</h2>
+        
+        <div class="flex flex-wrap justify-center gap-6 text-xs font-bold uppercase tracking-widest">
+            <button @click="activeCategory = 'todos'" 
+                    :class="activeCategory === 'todos' ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-slate-500'" 
+                    class="pb-2 transition-all">Todos</button>
+            
+            {% for category in categories %}
+            <button @click="activeCategory = '{{ category.slug }}'" 
+                    :class="activeCategory === '{{ category.slug }}' ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-slate-500'" 
+                    class="pb-2 transition-all">{{ category.name }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for project in projects %}
+        <div x-show="activeCategory === 'todos' || activeCategory === '{{ project.category.slug }}'"
+             x-transition:enter="transition duration-500 ease-out"
+             x-transition:enter-start="opacity-0 translate-y-4"
+             class="group bg-[#0a0a0a] rounded-3xl overflow-hidden border border-white/5 hover:border-cyan-500/30 transition-all">
+            
+            <a href="{% url 'project_detail' project.slug %}">
+                <div class="aspect-[16/10] bg-slate-900 overflow-hidden relative">
+                    {% with project.images.first as main_image %}
+                        {% if main_image %}
+                            <img src="{{ main_image.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                        {% else %}
+                            <div class="w-full h-full flex items-center justify-center text-slate-700 font-mono italic text-sm underline decoration-cyan-500">Sem Imagem</div>
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <div class="absolute top-4 left-4">
+                        <span class="px-3 py-1 bg-black/60 backdrop-blur-md text-[10px] text-white font-bold rounded-full uppercase border border-white/10">
+                            {{ project.category.name }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">{{ project.title }}</h3>
+                    <p class="text-slate-500 text-xs mt-1 uppercase tracking-tighter">Postado em {{ project.created_at|date:"M Y" }}</p>
+                    <div class="mt-6 flex items-center text-white text-xs font-bold gap-2">
+                        Explorar Case 
+                        <svg class="w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-span-full py-20 text-center text-slate-500 italic">Nenhum projeto cadastrado ainda.</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

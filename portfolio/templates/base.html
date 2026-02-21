@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | {% block title %}{% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+</head>
+<body class="bg-[#050505] text-slate-200 antialiased overflow-x-hidden">
+
+    {% include 'navbar.html' %}
+
+    <main class="pt-24 min-h-screen">
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        // Logica do Menu Mobile
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => menu.classList.add('hidden'));
+        });
+    </script>
+    {% comment %}
+      <script src="{% static 'js/router.js' %}"></script>  
+    {% endcomment %}
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
+</body>
+</html>
