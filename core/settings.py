@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-be!y_hy5z9r=z=d$ps6nik7dtk72!x)db71qiqq3@$x%&y#6ag
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.vercel.app', 'localhost',]
 
 
 # Application definition
@@ -89,6 +89,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # DATABASE
 # ========================
 DATABASE_URL="postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require"
+
 DATABASES = {
     "default": dj_database_url.parse(
         "postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require",
