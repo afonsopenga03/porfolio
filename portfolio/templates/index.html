@@ -22,8 +22,8 @@
                 Design Engineer focado em interfaces de alto impacto e arquitetura Python/Django.
             </p>
             <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                <a href="{% url "skills" %}" class="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-cyan-500 hover:text-white transition-all duration-300">
-                    Explorar Skills
+                <a href="{% url "projetos" %}" class="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-cyan-500 hover:text-white transition-all duration-300">
+                    Explorar Projetos
                 </a>
             </div>
         </div>
@@ -42,26 +42,15 @@
 
     </div>
 </section>
-     <section id="sobre" class="page-content px-6 max-w-7xl mx-auto py-12">
-            <div class="max-w-3xl">
-                <h2 class="text-4xl md:text-6xl font-bold mb-8">Minha Jornada</h2>
-                <p class="text-slate-400 text-xl leading-relaxed mb-6">
-                    Com mais de 5 anos de experiência, eu não apenas escrevo código; eu projeto sistemas que as pessoas amam usar. 
-                </p>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12">
-                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
-                        <h4 class="text-cyan-400 text-3xl font-bold">12+</h4>
-                        <p class="text-sm text-slate-500 uppercase mt-2">Projetos Ativos</p>
-                    </div>
-                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
-                        <h4 class="text-purple-400 text-3xl font-bold">50+</h4>
-                        <p class="text-sm text-slate-500 uppercase mt-2">Clientes Felizes</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    
 
-<section id="projetos" class="page-content px-6 max-w-7xl mx-auto py-12">
+{% include "sobre.html" %}
+
+{% include "skills.html" %}
+
+
+{% comment %}
+    <section id="projetos" class="page-content px-6 max-w-7xl mx-auto py-12">
     <h2 class="text-4xl font-black mb-12 uppercase italic">Portfolio_</h2>
     <div class="grid md:grid-cols-2 gap-8">
         <div class="group relative aspect-video bg-slate-900 rounded-3xl border border-white/5 overflow-hidden">
@@ -73,4 +62,7 @@
         </div>
     </div>
 </section>
+{% endcomment %}
+
+
 {% endblock %}
