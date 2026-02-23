@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Project
+from .models import Category, Project, ProjectImage, Category
+from django.utils.text import slugify
 
 def index(request):
     category_slug = request.GET.get('category')
@@ -83,3 +84,30 @@ def projetos(request):
     }
     return render(request, 'projetos.html', context)
 
+def dashboard(request):
+    if request.method == 'POST':
+        # Captura os dados do formulário
+        title = request.POST.get('title')
+        category_id = request.POST.get('category')
+        category = Category.objects.get(id=category_id)
+        
+        # Cria o projeto (gerando o slug automaticamente se estiver vazio)
+        project = Project.objects.create(
+            title=title,
+            category=category,
+            slug=slugify(title) 
+        )
+
+        # Captura múltiplas imagens
+        images = request.FILES.getlist('images')
+        for img in images:
+            ProjectImage.objects.create(project=project, image=img)
+            
+        return redirect('dashboard') # Recarrega a página ou vai para a lista
+
+    categories = Category.objects.all()
+    projects = Project.objects.all().order_by('-created_at')
+    return render(request, 'dashboard.html', {
+        'categories': categories,
+        'projects': projects
+    })

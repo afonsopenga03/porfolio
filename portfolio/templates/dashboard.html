@@ -1,0 +1,32 @@
+<div style="max-width: 600px; margin: auto;">
+    <h2>Postar Novo Projeto</h2>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <p>Título: <br>
+        <input type="text" name="title" required style="width: 100%"></p>
+
+        <p>Categoria: <br>
+        <select name="category" style="width: 100%">
+            {% for cat in categories %}
+                <option value="{{ cat.id }}">{{ cat.name }}</option>
+            {% endfor %}
+        </select></p>
+
+        <p>Imagens do Projeto: <br>
+        <input type="file" name="images" multiple required></p>
+
+        <button type="submit" style="background: #007bff; color: white; padding: 10px 20px; border: none;">
+            Publicar no Portfolio
+        </button>
+    </form>
+
+    <hr>
+    <h3>Projetos Recentes</h3>
+    <ul>
+        {% for p in projects %}
+            <li>{{ p.title }} - {{ p.created_at|date:"d/m/Y" }}</li>
+        {% endfor %}
+    </ul>
+</div>

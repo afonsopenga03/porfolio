@@ -20,12 +20,15 @@ import os
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-be!y_hy5z9r=z=d$ps6nik7dtk72!x)db71qiqq3@$x%&y#6ag'
+"""SECRET_KEY = 'django-insecure-be!y_hy5z9r=z=d$ps6nik7dtk72!x)db71qiqq3@$x%&y#6ag'"""
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-chave-padrao')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost',]
+
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -88,12 +91,19 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # ========================
 # DATABASE
 # ========================
-DATABASE_URL="postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require"
+"""DATABASE_URL="postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require""""
 
-DATABASES = {
+"""DATABASES = {
     "default": dj_database_url.parse(
         "postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require",
         conn_max_age=600,
+    )
+}"""
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
     )
 }
 # Password validation
@@ -146,20 +156,24 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #EMAIL
 # Configuração de e-mail (exemplo com Gmail)
  
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+"""EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'gregbrizzy@gmail.com'
 EMAIL_HOST_PASSWORD = 'afonsooooo'
 DEFAULT_FROM_EMAIL = 'gregbrizzy@gmail.com'
-
+"""
 # Configuração do Cloudinary (Pegue as chaves no site deles)
-CLOUDINARY_STORAGE = {
+"""CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'gregbrizzy',
     'API_KEY': '453352456264466',
     'API_SECRET': 'y6AOCPQRHsgZPru1PswuBjQSMKc'
+}"""
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
-
 # Define o Cloudinary como o motor de armazenamento de mídia
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
