@@ -20,11 +20,11 @@ import os
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-"""SECRET_KEY = 'django-insecure-be!y_hy5z9r=z=d$ps6nik7dtk72!x)db71qiqq3@$x%&y#6ag'"""
+
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-chave-padrao')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
@@ -34,15 +34,17 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    
     'portfolio',
     
-    'cloudinary_storage',
+    
     'cloudinary',
 ]
 
@@ -91,14 +93,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # ========================
 # DATABASE
 # ========================
-"""DATABASE_URL="postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require""""
 
-"""DATABASES = {
-    "default": dj_database_url.parse(
-        "postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require",
-        conn_max_age=600,
-    )
-}"""
+
+
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -147,10 +144,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # onde estão seus arquivos estáticos no projeto
-]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATICFILES_DIRS = [
+#    BASE_DIR / "static",  # onde estão seus arquivos estáticos no projeto
+#]
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
 
 #EMAIL

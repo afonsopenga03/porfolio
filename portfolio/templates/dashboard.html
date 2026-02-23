@@ -1,32 +1,190 @@
-<div style="max-width: 600px; margin: auto;">
-    <h2>Postar Novo Projeto</h2>
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
     
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <p>Título: <br>
-        <input type="text" name="title" required style="width: 100%"></p>
-
-        <p>Categoria: <br>
-        <select name="category" style="width: 100%">
-            {% for cat in categories %}
-                <option value="{{ cat.id }}">{{ cat.name }}</option>
-            {% endfor %}
-        </select></p>
-
-        <p>Imagens do Projeto: <br>
-        <input type="file" name="images" multiple required></p>
-
-        <button type="submit" style="background: #007bff; color: white; padding: 10px 20px; border: none;">
-            Publicar no Portfolio
-        </button>
-    </form>
-
-    <hr>
-    <h3>Projetos Recentes</h3>
-    <ul>
-        {% for p in projects %}
-            <li>{{ p.title }} - {{ p.created_at|date:"d/m/Y" }}</li>
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+        {% for message in messages %}
+        <div class="p-4 rounded-lg border {% if message.tags == 'success' %}bg-green-900/20 border-green-800 text-green-400{% else %}bg-amber-900/20 border-amber-800 text-amber-400{% endif %}">
+            {{ message }}
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+    {% endif %}
+
+    <div class="flex justify-between items-end mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-white">Gestão do Portfólio</h1>
+            <p class="text-slate-400">Total de projetos: {{ projects.count }}</p>
+        </div>
+        {% if is_editing %}
+        <a href="{% url 'dashboard' %}" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm transition">
+            + Novo Projeto
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-5">
+            <div class="bg-[#111] border border-slate-800 rounded-2xl p-6 sticky top-28 shadow-2xl">
+                <h2 class="text-xl font-semibold text-white mb-6">
+                    {% if is_editing %} Editar: {{ project_instance.title }} {% else %} Novo Projeto {% endif %}
+                </h2>
+
+                <form method="POST" enctype="multipart/form-data" class="space-y-5">
+                    {% csrf_token %}
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-xs uppercase tracking-widest text-slate-500 font-bold">Categoria</label>
+                            {{ form.category }}
+                        </div>
+                        <div>
+                            <label class="text-xs uppercase tracking-widest text-slate-500 font-bold">Título</label>
+                            {{ form.title }}
+                        </div>
+                        <div>
+                            <label class="text-xs uppercase tracking-widest text-slate-500 font-bold">Slug</label>
+                            {{ form.slug }}
+                        </div>
+                    </div>
+
+                   <div class="pt-6 border-t border-slate-800">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="text-sm font-bold text-blue-500 uppercase">Galeria de Imagens</h3>
+        <span class="text-[10px] text-slate-500 italic">Carregamento ilimitado</span>
+    </div>
+    
+    {{ formset.management_form }}
+    
+    <div id="image-form-list" class="space-y-4 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
+        {% for f in formset %}
+        <div class="image-form p-4 bg-[#0a0a0a] border border-slate-800 rounded-xl group hover:border-blue-900/50 transition relative">
+            {{ f.id }}
+            
+            {% if f.instance.image %}
+                <div class="flex items-center gap-4 mb-3">
+                    <img src="{{ f.instance.image.url }}" class="w-12 h-12 object-cover rounded-md border border-slate-700">
+                    <label class="text-xs text-red-500 flex items-center gap-1 cursor-pointer">
+                        {{ f.DELETE }} Apagar esta foto?
+                    </label>
+                </div>
+            {% endif %}
+
+            <div class="text-sm text-slate-400">
+                {{ f.image }}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div id="empty-form" class="hidden p-4 bg-[#0a0a0a] border border-dashed border-slate-700 rounded-xl">
+            <span class="block text-xs text-slate-500 mb-1">Nova Imagem</span>
+            {{ formset.empty_form.image }}
+        </div>
+    </div>
+
+    <button type="button" id="add-image-btn" class="w-full mt-4 py-2 border border-dashed border-slate-700 text-slate-500 rounded-xl hover:text-blue-400 hover:border-blue-500 transition text-sm flex justify-center items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Adicionar mais uma foto
+    </button>
 </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all flex justify-center items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {% if is_editing %} Salvar Alterações {% else %} Publicar Agora {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:col-span-7">
+            <div class="bg-[#111] border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-[#0a0a0a] text-slate-500 text-[10px] uppercase tracking-tighter">
+                        <tr>
+                            <th class="px-6 py-4">Projeto</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4 text-right">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/50">
+                        {% for p in projects %}
+                        <tr class="{% if p.id == project_instance.id %}bg-blue-900/10 border-l-4 border-blue-500{% endif %} hover:bg-[#161616] transition">
+                            <td class="px-6 py-5">
+                                <div class="font-semibold text-slate-200">{{ p.title }}</div>
+                                <div class="text-xs text-slate-500">{{ p.category.name }} • {{ p.created_at|date:"d M Y" }}</div>
+                            </td>
+                            <td class="px-6 py-5">
+                                <span class="px-2 py-1 bg-slate-800 text-blue-400 rounded-md text-[10px] font-bold uppercase">
+                                    {{ p.images.count }} Fotos
+                                </span>
+                            </td>
+                            <td class="px-6 py-5">
+                                <div class="flex justify-end gap-2">
+                                    <a href="{% url 'edit_project' p.id %}" class="p-2 bg-slate-800 hover:bg-blue-900/40 text-slate-400 hover:text-blue-400 rounded-lg transition">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                    </a>
+                                    <form action="{% url 'delete_project' p.id %}" method="POST" onsubmit="return confirm('Apagar projeto permanentemente?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="p-2 bg-slate-800 hover:bg-red-900/40 text-slate-400 hover:text-red-500 rounded-lg transition">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const addImageBtn = document.getElementById('add-image-btn');
+    const totalForms = document.getElementById('id_images-TOTAL_FORMS'); // ID padrão do Django para o formset
+    const imageList = document.getElementById('image-form-list');
+    const emptyForm = document.getElementById('empty-form');
+
+    addImageBtn.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
+        
+        // 1. Pega o número atual de formulários
+        const currentFormCount = document.querySelectorAll('.image-form').length;
+        
+        // 2. Clona o formulário vazio
+        const newForm = emptyForm.cloneNode(true);
+        newForm.setAttribute('class', 'image-form p-4 bg-[#0a0a0a] border border-slate-800 rounded-xl group animate-fade-in');
+        newForm.setAttribute('id', `form-${currentFormCount}`);
+        
+        // 3. Atualiza os índices do Django (de __prefix__ para o número atual)
+        const regex = new RegExp('__prefix__', 'g');
+        newForm.innerHTML = newForm.innerHTML.replace(regex, currentFormCount);
+        
+        // 4. Incrementa o contador total de formulários para o Django processar
+        totalForms.setAttribute('value', currentFormCount + 1);
+        
+        // 5. Adiciona à lista
+        imageList.appendChild(newForm);
+    });
+</script>
+
+<style>
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+</style>
+{% endblock %}
