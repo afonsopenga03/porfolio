@@ -55,7 +55,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     "default": dj_database_url.parse(
-        os.environ.get('DATABASE_URL'),  # ← lê da variável de ambiente
+        "postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require",
         conn_max_age=600,
     )
 }
@@ -87,6 +87,7 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 MEDIA_URL = '/media/'  # ← isso estava faltando!
 
 # Email
