@@ -4,6 +4,15 @@ from django.utils.text import slugify
 from .forms import ProjectForm, ProjectImageFormSet
 from django.contrib.admin.views.decorators import staff_member_required # Importação importante
 
+import cloudinary
+import cloudinary.uploader
+
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+)
+
 def index(request):
     category_slug = request.GET.get('category')
 
@@ -117,9 +126,10 @@ def trabalhos(request):
         'projects': projects
     })"""
     
+import cloudinary.uploader
+
 @staff_member_required(login_url='admin:login')
 def dashboard(request, project_id=None):
-    # Se project_id existir, estamos EDITANDO, senão estamos CRIANDO
     instance = get_object_or_404(Project, id=project_id) if project_id else None
     
     if request.method == 'POST':
@@ -128,7 +138,22 @@ def dashboard(request, project_id=None):
         
         if form.is_valid() and formset.is_valid():
             project = form.save()
-            formset.save() # O formset lida com criar, editar e DELETAR fotos
+            
+            # Salva manualmente cada imagem no Cloudinary
+            for f in formset.forms:
+                if f.cleaned_data.get('image') and not f.cleaned_data.get('DELETE', False):
+                    image_file = f.cleaned_data['image']
+                    # Se é um arquivo novo (não uma string/URL existente)
+                    if hasattr(image_file, 'read'):
+                        result = cloudinary.uploader.upload(image_file)
+                        img_instance = f.save(commit=False)
+                        img_instance.project = project
+                        img_instance.image = result['public_id']
+                        img_instance.save()
+                    else:
+                        f.save()
+                elif f.cleaned_data.get('DELETE') and f.instance.pk:
+                    f.instance.delete()
             
             action = "atualizado" if instance else "criado"
             messages.success(request, f"Projeto '{project.title}' {action} com sucesso!")
@@ -147,8 +172,6 @@ def dashboard(request, project_id=None):
         'is_editing': bool(instance),
         'project_instance': instance
     })
-    
-
 @staff_member_required(login_url='admin:login')
 def delete_project(request, project_id):
     if request.method == 'POST':
