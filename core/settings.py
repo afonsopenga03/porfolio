@@ -20,8 +20,8 @@ import os
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-chave-padrao')
+SECRET_KEY = 'django-insecure-be!y_hy5z9r=z=d$ps6nik7dtk72!x)db71qiqq3@$x%&y#6ag'
+ 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,17 +34,15 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'cloudinary_storage',
-    'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    
+    'django.contrib.staticfiles',
     'portfolio',
     
-    
+    'cloudinary_storage',
     'cloudinary',
 ]
 
@@ -95,14 +93,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # ========================
 
 
-
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600
+    "default": dj_database_url.parse(
+        "postgresql://neondb_owner:npg_nWPf0AS5rtKw@ep-damp-sky-aie0nofn-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        conn_max_age=600,
     )
 }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
@@ -144,29 +142,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-#STATICFILES_DIRS = [
-#    BASE_DIR / "static",  # onde estão seus arquivos estáticos no projeto
-#]
-STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # onde estão seus arquivos estáticos no projeto
+]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 #EMAIL
 # Configuração de e-mail (exemplo com Gmail)
  
-"""EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'gregbrizzy@gmail.com'
 EMAIL_HOST_PASSWORD = 'afonsooooo'
 DEFAULT_FROM_EMAIL = 'gregbrizzy@gmail.com'
-"""
+
 # Configuração do Cloudinary (Pegue as chaves no site deles)
-"""CLOUDINARY_STORAGE = {
+CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'gregbrizzy',
     'API_KEY': '453352456264466',
     'API_SECRET': 'y6AOCPQRHsgZPru1PswuBjQSMKc'
-}"""
+}
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
@@ -174,3 +172,5 @@ CLOUDINARY_STORAGE = {
 }
 # Define o Cloudinary como o motor de armazenamento de mídia
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/dashboard/' # Onde o usuário cai após logar

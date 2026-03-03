@@ -1,47 +1,85 @@
-{% extends "base.html" %}
+{% load static %}
 
-{% block content  %}
-
-
- 
-
-<section id="sobre" class="page-content px-6 max-w-7xl mx-auto py-12">
-    <div class="grid lg:grid-cols-2 gap-16 items-start">
-        <div class="relative">
-            <div class="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-cyan-500"></div>
-            <div class="bg-gradient-to-br from-slate-800 to-slate-900 aspect-[4/5] rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition duration-700 shadow-2xl">
-                <div class="w-full h-full flex items-center justify-center text-slate-700 italic">Sua Foto</div>
+    <!-- ========== SOBRE ========== -->
+    <section id="sobre" class="py-24 lg:py-36">
+        <div class="max-w-7xl mx-auto px-5 lg:px-10">
+            <!-- Section label -->
+            <div class="reveal flex items-center gap-3 mb-14">
+                <span class="text-[11px] font-mono font-semibold text-accent tracking-widest uppercase">01 — Sobre</span>
+                <div class="h-[1px] w-16 bg-border"></div>
             </div>
-            <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-purple-500"></div>
-        </div>
 
-        <div>
-            <h2 class="text-4xl md:text-6xl font-black mb-8 uppercase tracking-tighter">Minha <span class="text-cyan-500">Essência.</span></h2>
-            <div class="space-y-6 text-slate-400 text-lg leading-relaxed">
-                <p>
-                  Olá, sou Afonso Penga, Designer gráfico com 6+ anos de experiência em criação de logotipos, branding, design publicitário e produção digital em softwares da Adobe, incluindo Photoshop, Illustrator, InDesign e After Effects. 
-                    
-                </p>
-                <p>
-                   Atuo também como Frontend Web Developer com foco em interfaces modernas e responsivas, utilizando HTML, CSS, Bootstrap e Tailwind 
-                </p>
-                <p>
-                    Como desenvolvedor com foco em **Django e Python**, busco construir estruturas robustas no backend que sustentam experiências de usuário fluidas e memoráveis no frontend. 
-                </p>
-                
-                <div class="pt-8 grid grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="text-white font-bold mb-2">Visão de Designer</h4>
-                        <p class="text-sm">Pixel perfect, hierarquia visual e tipografia estratégica.</p>
+            <div class="grid lg:grid-cols-12 gap-14 lg:gap-20">
+                <!-- Left: big text -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="reveal">
+                        <h2 class="text-3xl lg:text-[2.75rem] font-display font-bold text-heading leading-tight">
+                            Faço a ponte entre
+                            <span class="relative">
+                                criatividade
+                                <span class="absolute bottom-0 left-0 w-full h-3 bg-accent/10 -z-10 rounded"></span>
+                            </span>
+                            e
+                            <span class="relative">
+                                tecnologia<span class="text-accent">.</span>
+                                <span class="absolute bottom-0 left-0 w-full h-3 bg-purple/10 -z-10 rounded"></span>
+                            </span>
+                        </h2>
                     </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-2">Mente de Dev</h4>
-                        <p class="text-sm">Código limpo, performance e escalabilidade de dados.</p>
+
+                    <div class="reveal space-y-4 text-subtle leading-relaxed">
+                        <p>
+                         Designer gráfico com 6+ anos de experiência em criação de logotipos, branding, design publicitário e produção digital em softwares da Adobe, incluindo Photoshop, Illustrator, InDesign e After Effects.
+
+
+
+Atuo também como Frontend Web Developer com foco em interfaces modernas e responsivas, utilizando HTML, CSS, Bootstrap e Tailwind
+                        <p>
+                            
+                        </p>
+                    </div>
+
+                    <!-- Skills chips -->
+                    <div class="reveal">
+                        <p class="text-[11px] font-mono font-semibold text-muted uppercase tracking-widest mb-4">Ferramentas</p>
+                        <div class="flex flex-wrap gap-2 stagger">
+                            <span class="pill px-3.5 py-2 bg-surface border border-border rounded-xl text-xs font-medium text-subtle"><a title="Vijay Verma, CC0, via Wikimedia Commons" href="#sobre"><img width="50" alt="3-D Figma color dynamic icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Figma-dynamic-color.png/512px-Figma-dynamic-color.png?_=20211104020526"></a></span>
+                            <span class="pill px-3.5 py-2 bg-surface border border-border rounded-xl text-xs font-medium text-subtle"><a title="Adobe Inc., Public domain, via Wikimedia Commons" href="#sobre"><img width="50" alt="Logo of the digital imaging program, Adobe illustrateurs" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/512px-Adobe_Photoshop_CC_icon.svg.png?_=20200616073617"></a></span>
+                            <span class="pill px-3.5 py-2 bg-surface border border-border rounded-xl text-xs font-medium text-subtle"><a title="™/®Adobe Inc., Public domain, via Wikimedia Commons" href="#sobre"><img width="50" alt="The icon of the vector graphics editing application Adobe Illustrator." src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/512px-Adobe_Illustrator_CC_icon.svg.png?_=20251029195730"></a></span>
+                            <span class="pill px-3.5 py-2 bg-accent-soft border border-accent/10 rounded-xl text-xs font-medium text-accent"><a title="Adobe Inc., Public domain, via Wikimedia Commons" href="#sobre"><img width="50" alt="The icon of the digital effects, motion graphics, and compositing application Adobe After Effects" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Adobe_After_Effects_CC_2026_icon.svg/32px-Adobe_After_Effects_CC_2026_icon.svg.png?_=20251030131557"></a></span>
+                            <span class="pill px-3.5 py-2 bg-purple-soft border border-purple/10 rounded-xl text-xs font-medium text-purple"><a title="Adobe Inc., Public domain, via Wikimedia Commons" href="#sobre"><img width="50" alt="The icon of the desktop publishing and page layout designing application Adobe Indesign" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Adobe_Indesign_CC_2026_icon.svg/128px-Adobe_Indesign_CC_2026_icon.svg.png?_=20251030132404"></a></span>
+                            <span class="pill px-3.5 py-2 bg-surface border border-border rounded-xl text-xs font-medium text-subtle"><a title="Adobe Inc., Public domain, via Wikimedia Commons" href="#sobre"><img width="50" alt="The icon of the video editing application Adobe Premiere Pro" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Adobe_Premiere_Pro_CC_2026_icon.svg/128px-Adobe_Premiere_Pro_CC_2026_icon.svg.png?_=20251030131341"></a></span>
+ 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: photo + quick info -->
+                <div class="lg:col-span-5 space-y-5">
+                    <div class="reveal-scale">
+                        <div class="aspect-[4/5] rounded-3xl overflow-hidden bg-surface relative">
+                             <img src="{% static 'bb.jpg' %}" alt="Afonso Penga" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700 ease-in-out transform hover:scale-105">
+                            
+                            <!-- Gradient overlay at bottom -->
+                            <div class="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-surface/80 to-transparent"></div>
+                        </div>
+                    </div>
+
+                    <!-- Info card -->
+                    <div class="reveal bg-elevated rounded-2xl p-5 border border-border">
+                        <div class="flex items-start gap-3">
+                            <span class="text-2xl">💬</span>
+                            <div>
+                                <p class="text-sm text-subtle leading-relaxed italic">
+                                    "Interface bonita que não funciona é só decoração — e decoração não resolve problema de ninguém."
+                                </p>
+                                <p class="text-[11px] text-muted mt-2">— Eu, num café às 7h da manhã</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-{% endblock  %}
+    </section>
 
+ 

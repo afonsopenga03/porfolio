@@ -4,12 +4,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | {% block title %}{% endblock %}</title>
-    
+    <title>Afonso Penga — Designer & Dev</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#FAFAF8',
+                        surface: '#F2F1EE',
+                        elevated: '#FFFFFF',
+                        border: '#E8E7E4',
+                        muted: '#A3A09A',
+                        subtle: '#6E6B65',
+                        body: '#3D3A36',
+                        heading: '#1A1917',
+                        accent: '#FF6B35',
+                        'accent-hover': '#E85A28',
+                        'accent-soft': '#FFF0EA',
+                        purple: '#8B5CF6',
+                        'purple-soft': '#F3EFFE',
+                        teal: '#0D9488',
+                        'teal-soft': '#ECFDF5',
+                    },
+                    fontFamily: {
+                        display: ['Space Grotesk', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                        mono: ['Sora', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: #FAFAF8; color: #3D3A36; }
+
+        ::selection { background: #FF6B35; color: white; }
+
+        /* Modern grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.015;
+            pointer-events: none;
+            z-index: 100;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.96); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+        /* Magnetic hover for cards */
+        .card-hover { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -12px rgba(0,0,0,0.08); }
+
+        /* Project image zoom */
+        .project-img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .group:hover .project-img { transform: scale(1.04); }
+
+        /* Arrow animation */
+        .arrow-hover svg { transition: transform 0.3s ease; }
+        .arrow-hover:hover svg { transform: translate(3px, -3px); }
+
+        /* Nav link */
+        .nav-dot { width: 0; transition: width 0.3s ease; }
+        .nav-item:hover .nav-dot { width: 20px; }
+
+        /* Pill animation */
+        .pill { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .pill:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+        /* Marquee */
+        @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .marquee-inner { animation: scroll-x 25s linear infinite; }
+        .marquee-inner:hover { animation-play-state: paused; }
+
+        /* Gradient mesh */
+        .mesh-gradient {
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(255,107,53,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(13,148,136,0.04) 0%, transparent 50%);
+        }
+
+        /* Mobile menu */
+        .mobile-menu { clip-path: circle(0% at calc(100% - 36px) 36px); transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .mobile-menu.open { clip-path: circle(150% at calc(100% - 36px) 36px); }
+
+        /* Cursor dot */
+        .cursor-dot { transition: transform 0.15s ease, opacity 0.3s ease; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #D1D0CD; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A3A09A; }
+
+        /* Focus visible */
+        *:focus-visible { outline: 2px solid #FF6B35; outline-offset: 2px; border-radius: 8px; }
+
+        /* Form inputs */
+        .input-modern { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .input-modern:focus { border-color: #FF6B35; box-shadow: 0 0 0 3px rgba(255,107,53,0.08); outline: none; }
+
+        /* Stagger children */
+        .stagger > *:nth-child(1) { transition-delay: 0s; }
+        .stagger > *:nth-child(2) { transition-delay: 0.06s; }
+        .stagger > *:nth-child(3) { transition-delay: 0.12s; }
+        .stagger > *:nth-child(4) { transition-delay: 0.18s; }
+        .stagger > *:nth-child(5) { transition-delay: 0.24s; }
+        .stagger > *:nth-child(6) { transition-delay: 0.30s; }
+
+        /* Progress */
+        #scroll-progress { transform-origin: left; transition: transform 0.05s linear; }
+
+        /* Bento grid */
+        @media (min-width: 768px) {
+            .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; }
+            .bento-wide { grid-column: span 7; }
+            .bento-narrow { grid-column: span 5; }
+            .bento-half { grid-column: span 6; }
+            .bento-full { grid-column: span 12; }
+        }
+    </style>
 </head>
-<body class="bg-[#050505] text-slate-200 antialiased overflow-x-hidden">
+<body class="bg-bg text-body overflow-x-hidden antialiased">
+    
+      <!-- Scroll Progress -->
+    <div class="fixed top-0 left-0 right-0 h-[2px] z-[60] bg-transparent">
+        <div id="scroll-progress" class="h-full bg-gradient-to-r from-accent via-purple to-teal" style="transform: scaleX(0)"></div>
+    </div>
 
     {% include 'navbar.html' %}
 
@@ -21,25 +157,107 @@
 
     {% include 'footer.html' %}
 
-    <script>
-        // Logica do Menu Mobile
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-        // Fechar menu mobile ao clicar em um link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => menu.classList.add('hidden'));
-        });
-    </script>
+ 
     {% comment %}
       <script src="{% static 'js/router.js' %}"></script>  
+      <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     {% endcomment %}
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal, .reveal-scale').forEach(el => obs.observe(el));
+
+    // Nav background
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('bg-bg/80', scrollY > 40);
+        nav.classList.toggle('backdrop-blur-xl', scrollY > 40);
+        nav.classList.toggle('border-b', scrollY > 40);
+        nav.classList.toggle('border-border', scrollY > 40);
+        nav.classList.toggle('shadow-sm', scrollY > 40);
+    });
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+        const p = scrollY / (document.documentElement.scrollHeight - innerHeight);
+        document.getElementById('scroll-progress').style.transform = `scaleX(${p})`;
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menu-btn');
+    const mobMenu = document.getElementById('mobile-menu');
+    const burger = document.getElementById('burger');
+    let mOpen = false;
+    menuBtn.addEventListener('click', () => {
+        mOpen = !mOpen;
+        mobMenu.classList.toggle('open');
+        burger.children[0].style.transform = mOpen ? 'rotate(45deg) translate(2px, 4px)' : '';
+        burger.children[1].style.opacity = mOpen ? '0' : '1';
+        burger.children[1].style.transform = mOpen ? 'rotate(-45deg) translate(2px, -3px)' : '';
+        burger.children[1].style.width = mOpen ? '20px' : '14px';
+        document.body.style.overflow = mOpen ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => {
+        mOpen = false; mobMenu.classList.remove('open');
+        burger.children[0].style.transform = ''; burger.children[1].style.opacity = '1';
+        burger.children[1].style.transform = ''; burger.children[1].style.width = '14px';
+        document.body.style.overflow = '';
+    }));
+
+    // Filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('bg-heading', 'text-white');
+                b.classList.add('bg-surface', 'text-subtle', 'border', 'border-border');
+            });
+            btn.classList.remove('bg-surface', 'text-subtle', 'border', 'border-border');
+            btn.classList.add('bg-heading', 'text-white');
+            const f = btn.dataset.filter;
+            document.querySelectorAll('.project-item').forEach(p => {
+                const show = f === 'all' || p.dataset.category === f;
+                p.style.opacity = show ? '1' : '0';
+                p.style.transform = show ? '' : 'scale(0.95)';
+                p.style.transition = 'all 0.4s ease';
+                setTimeout(() => { p.style.display = show ? '' : 'none'; }, show ? 0 : 400);
+            });
+        });
+    });
+
+    // BTT
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+        btt.classList.toggle('opacity-0', scrollY < 500);
+        btt.classList.toggle('pointer-events-none', scrollY < 500);
+    });
+    btt.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Form
+    document.getElementById('contact-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.target, success = document.getElementById('form-success');
+        form.style.opacity = '0'; form.style.transform = 'translateY(-8px)';
+        form.style.transition = 'all 0.3s ease';
+        setTimeout(() => {
+            form.classList.add('hidden'); success.classList.remove('hidden');
+            success.style.opacity = '0'; success.style.transition = 'all 0.4s ease';
+            setTimeout(() => { success.style.opacity = '1'; }, 50);
+        }, 300);
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>

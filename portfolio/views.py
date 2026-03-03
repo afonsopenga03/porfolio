@@ -86,6 +86,9 @@ def projetos(request):
     }
     return render(request, 'projetos.html', context)
 
+def trabalhos(request):
+    return render(request, 'trabalhos.html' )
+
 """def dashboard(request):
     if request.method == 'POST':
         # Captura os dados do formulário
@@ -144,6 +147,7 @@ def dashboard(request, project_id=None):
         'is_editing': bool(instance),
         'project_instance': instance
     })
+    
 
 @staff_member_required(login_url='admin:login')
 def delete_project(request, project_id):

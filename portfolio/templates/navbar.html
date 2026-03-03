@@ -1,30 +1,54 @@
-<nav class="fixed w-full z-[100] bg-[#050505]/80 backdrop-blur-lg border-b border-white/5 px-6 py-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="{% url 'home' %}" class="text-2xl font-black tracking-tighter bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-            AFONSO_PENGA<span class="text-white">_</span>
-        </a>
+ 
+    <!-- ========== NAV ========== -->
 
-        <div class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
-            <a href="{% url 'home' %}" class="hover:text-cyan-400 transition-colors">Início</a>
-            <a href="{% url 'sobre' %}" class="hover:text-cyan-400 transition-colors">Sobre</a>
-            <a href="{% url 'skills' %}" class="hover:text-cyan-400 transition-colors">Habilidades</a>
-            <a href="{% url 'projetos' %}" class="hover:text-cyan-400 transition-colors">Portfolio</a>
-            <a href="{% url 'contato' %}" class="bg-white text-black px-6 py-2 rounded-full hover:bg-cyan-500 hover:text-white transition-all duration-300">Contato</a>
-             
+    <nav id="nav" class="fixed top-0 w-full z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-5 lg:px-10">
+            <div class="flex items-center justify-between h-16 lg:h-[72px]">
+                <a href="{% url "home" %}" class="flex items-center gap-2.5 group">
+                    <div class="relative w-8 h-8 rounded-lg bg-heading flex items-center justify-center overflow-hidden">
+                        <span class="text-white font-display font-bold text-sm relative z-10">A</span>
+                        <div class="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <span class="text-heading font-display font-semibold text-[15px] hidden sm:block">AFONSO PENGA<span class="text-accent">.</span></span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="#curriculo" class="nav-item relative px-4 py-2 text-[13px] text-subtle hover:text-heading transition-colors font-medium">
+                        Skills
+                        <span class="nav-dot absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] bg-accent rounded-full"></span>
+                    </a>
+                    <a href="#sobre" class="nav-item relative px-4 py-2 text-[13px] text-subtle hover:text-heading transition-colors font-medium">
+                        Sobre
+                        <span class="nav-dot absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] bg-accent rounded-full"></span>
+                    </a>
+                    <a href="#trabalhos" class="nav-item relative px-4 py-2 text-[13px] text-subtle hover:text-heading transition-colors font-medium">
+                        Trabalhos
+                        <span class="nav-dot absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] bg-accent rounded-full"></span>
+                    </a>
+                    <a href="#servicos" class="nav-item relative px-4 py-2 text-[13px] text-subtle hover:text-heading transition-colors font-medium">
+                        Serviços
+                        <span class="nav-dot absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] bg-accent rounded-full"></span>
+                    </a>
+                    <a href="{% url "projetos" %}" class="ml-3 bg-heading text-white px-5 py-2 rounded-xl text-[13px] font-semibold hover:bg-accent transition-colors duration-300 hover:shadow-lg hover:shadow-accent/20">
+                        Porfólio
+                    </a>
+                </div>
+
+                <button id="menu-btn" class="md:hidden relative w-10 h-10 rounded-xl bg-surface flex items-center justify-center" aria-label="Menu">
+                    <div class="flex flex-col gap-[5px] transition-all duration-300" id="burger">
+                        <span class="block w-5 h-[1.5px] bg-heading transition-all duration-300 origin-center"></span>
+                        <span class="block w-3.5 h-[1.5px] bg-heading transition-all duration-300 ml-auto"></span>
+                    </div>
+                </button>
+            </div>
         </div>
+    </nav>
 
-        <button id="menu-btn" class="md:hidden text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
-            </svg>
-        </button>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 z-[55] bg-bg flex flex-col items-center justify-center gap-6">
+        <a href="{% url "home" %}" class="mob-link text-3xl font-display font-semibold text-heading hover:text-accent transition-colors">Página Inicial</a>
+        <a href="#sobre" class="mob-link text-3xl font-display font-semibold text-heading hover:text-accent transition-colors">Sobre</a>
+        <a href="#trabalhos" class="mob-link text-3xl font-display font-semibold text-heading hover:text-accent transition-colors">Trabalhos</a>
+        <a href="#servicos" class="mob-link text-3xl font-display font-semibold text-heading hover:text-accent transition-colors">Serviços</a>
+        <a href="{% url "projetos" %}" class="mob-link mt-4 bg-accent text-white px-8 py-3.5 rounded-2xl text-base font-semibold hover:bg-accent-hover transition-colors">Porfólio</a>
     </div>
-
-    <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-black border-b border-white/10 p-8 flex flex-col gap-6 text-center text-sm font-bold uppercase tracking-widest">
-        <a href="{% url 'home' %} " class="nav-link">Início</a>
-        <a href="{% url 'sobre' %}" class="nav-link">Sobre</a>
-        <a href="{% url 'skills' %}" class="nav-link">Habilidades</a>
-        <a href="{% url 'projetos' %}" class="nav-link">Projetos</a>
-        <a href="{% url 'contato' %}" class="text-cyan-400">Contato</a>
-    </div>
-</nav>
