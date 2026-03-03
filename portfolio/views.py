@@ -1,60 +1,42 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Category, Project, ProjectImage, Category
-from django.utils.text import slugify
-from .forms import ProjectForm, ProjectImageFormSet
-from django.contrib.admin.views.decorators import staff_member_required # Importação importante
+# views.py
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.mail import send_mail
+from django.conf import settings
+from django.utils.text import slugify
+
+from .models import Category, Project, ProjectImage
+from .forms import ProjectForm, ProjectImageFormSet
 
 
 def index(request):
     category_slug = request.GET.get('category')
-
     if category_slug:
         projects = Project.objects.filter(category__slug=category_slug)
     else:
         projects = Project.objects.all()
 
     categories = Category.objects.all()
-
     return render(request, 'index.html', {
         'projects': projects,
         'categories': categories
     })
 
 
-    
-    return render(request, 'index.html', context)
-
-
-
-"""def project_detail(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-
-    return render(request, 'project_detail.html', {
-        'project': project
-    })"""
-    
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
     return render(request, 'project_detail.html', {'project': project})
-    
+
+
 def sobre(request):
     return render(request, "sobre.html")
+
 
 def skills(request):
     return render(request, "skills.html")
 
-from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.conf import settings
-
-# views.py
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.conf import settings
 
 def contato(request):
     if request.method == 'POST':
@@ -76,10 +58,10 @@ def contato(request):
                 messages.error(request, f'Erro ao enviar: {e}')
         else:
             messages.error(request, 'Todos os campos são obrigatórios.')
+        return redirect('contato')
 
-        return redirect('contato')  # Nome da URL da página de contato
+    return render(request, 'contato.html')
 
-    return render(request, 'contato.html')  # Substitua pelo caminho real
 
 def projetos(request):
     context = {
@@ -88,60 +70,41 @@ def projetos(request):
     }
     return render(request, 'projetos.html', context)
 
+
 def trabalhos(request):
-    return render(request, 'trabalhos.html' )
+    return render(request, 'trabalhos.html')
 
-"""def dashboard(request):
-    if request.method == 'POST':
-        # Captura os dados do formulário
-        title = request.POST.get('title')
-        category_id = request.POST.get('category')
-        category = Category.objects.get(id=category_id)
-        
-        # Cria o projeto (gerando o slug automaticamente se estiver vazio)
-        project = Project.objects.create(
-            title=title,
-            category=category,
-            slug=slugify(title) 
-        )
-
-        # Captura múltiplas imagens
-        images = request.FILES.getlist('images')
-        for img in images:
-            ProjectImage.objects.create(project=project, image=img)
-            
-        return redirect('dashboard') # Recarrega a página ou vai para a lista
-
-    categories = Category.objects.all()
-    projects = Project.objects.all().order_by('-created_at')
-    return render(request, 'dashboard.html', {
-        'categories': categories,
-        'projects': projects
-    })"""
-    
-import cloudinary.uploader
 
 @staff_member_required(login_url='admin:login')
 def dashboard(request, project_id=None):
-    # Se project_id existir, estamos EDITANDO, senão estamos CRIANDO
     instance = get_object_or_404(Project, id=project_id) if project_id else None
-    
+
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=instance)
-        formset = ProjectImageFormSet(request.POST, request.FILES, instance=instance)
-        
-        if form.is_valid() and formset.is_valid():
+        # IMPORTANTE: Só passa instance se existir
+        formset = ProjectImageFormSet(
+            request.POST, request.FILES,
+            instance=instance if instance else Project()
+        )
+
+        if form.is_valid():
             project = form.save()
-            formset.save() # O formset lida com criar, editar e DELETAR fotos
-            
-            action = "atualizado" if instance else "criado"
-            messages.success(request, f"Projeto '{project.title}' {action} com sucesso!")
-            return redirect('dashboard')
+
+            # Re-vincular o formset ao projeto salvo (crucial ao CRIAR)
+            formset.instance = project
+
+            if formset.is_valid():
+                formset.save()
+                action = "atualizado" if instance else "criado"
+                messages.success(request, f"Projeto '{project.title}' {action} com sucesso!")
+                return redirect('dashboard')
+            else:
+                messages.error(request, f"Erro nas imagens: {formset.errors}")
         else:
             messages.error(request, "Erro ao salvar. Verifique os campos abaixo.")
     else:
         form = ProjectForm(instance=instance)
-        formset = ProjectImageFormSet(instance=instance)
+        formset = ProjectImageFormSet(instance=instance if instance else Project())
 
     projects = Project.objects.all().order_by('-created_at')
     return render(request, 'dashboard.html', {
@@ -151,7 +114,8 @@ def dashboard(request, project_id=None):
         'is_editing': bool(instance),
         'project_instance': instance
     })
-    
+
+
 @staff_member_required(login_url='admin:login')
 def delete_project(request, project_id):
     if request.method == 'POST':
