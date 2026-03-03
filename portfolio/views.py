@@ -4,14 +4,7 @@ from django.utils.text import slugify
 from .forms import ProjectForm, ProjectImageFormSet
 from django.contrib.admin.views.decorators import staff_member_required # Importação importante
 
-import cloudinary
-import cloudinary.uploader
 
-cloudinary.config(
-    cloud_name=os.environ.get('CLOUDINARY_NAME'),
-    api_key=os.environ.get('CLOUDINARY_API_KEY'),
-    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
-)
 
 def index(request):
     category_slug = request.GET.get('category')
