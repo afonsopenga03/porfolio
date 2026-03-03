@@ -160,8 +160,8 @@
         </div>
         <h3 class="text-xl font-bold text-white text-center mb-2">Arquivo muito grande!</h3>
         <p class="text-slate-400 text-center text-sm leading-relaxed mb-8">
-            Para garantir a performance, a Vercel limita uploads a <span class="text-white font-bold">4.5MB</span>. 
-            Reduza o tamanho da sua imagem ou use um formato mais leve (como JPG ou WebP).
+            Para garantir a estabilidade na Vercel, cada imagem deve ter menos de <span class="text-white font-bold">4.5MB</span>. 
+            Por favor, comprima a imagem ou use um ficheiro menor.
         </p>
         <button type="button" onclick="closeSizeModal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-red-900/20">
             Entendido
@@ -170,11 +170,21 @@
 </div>
 
 <style>
+  @keyframes fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
     @keyframes modal-in {
-    from { opacity: 0; transform: scale(0.95) translateY(10px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-}
-.animate-modal-in { animation: modal-in 0.2s ease-out forwards; }
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+    .animate-modal-in { animation: modal-in 0.2s ease-out forwards; }
+    
+    /* Scrollbar personalizada para a galeria */
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0a0a0a; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
     
     @keyframes fade-in {
         from { opacity: 0; transform: translateY(10px); }
@@ -185,35 +195,58 @@
 
 
 <script>
-    // ... suas variáveis (addImageBtn, totalForms, etc) continuam iguais ...
+    // --- 1. Lógica Original de Adicionar Linhas (Galeria) ---
+    const addImageBtn = document.getElementById('add-image-btn');
+    const totalForms = document.getElementById('id_images-TOTAL_FORMS');
+    const imageList = document.getElementById('image-form-list');
+    const emptyForm = document.getElementById('empty-form');
 
+    addImageBtn.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
+        
+        const currentFormCount = document.querySelectorAll('.image-form').length;
+        const newForm = emptyForm.cloneNode(true);
+        
+        newForm.setAttribute('class', 'image-form p-4 bg-[#0a0a0a] border border-slate-800 rounded-xl group animate-fade-in');
+        newForm.setAttribute('id', `form-${currentFormCount}`);
+        
+        const regex = new RegExp('__prefix__', 'g');
+        newForm.innerHTML = newForm.innerHTML.replace(regex, currentFormCount);
+        
+        totalForms.setAttribute('value', currentFormCount + 1);
+        imageList.appendChild(newForm);
+    });
+
+    // --- 2. Lógica do Modal e Validação de Tamanho ---
     const sizeModal = document.getElementById('size-error-modal');
 
     function closeSizeModal() {
         sizeModal.classList.add('hidden');
     }
 
-    // Validação ao enviar o formulário
+    // Validação ao clicar em Submeter
     document.querySelector('form').addEventListener('submit', function(e) {
         const files = document.querySelectorAll('input[type="file"]');
-        const MAX_SIZE = 4.4 * 1024 * 1024; // 4.4MB
+        const MAX_SIZE = 4.4 * 1024 * 1024; // 4.4MB limite
         let fileTooLarge = false;
 
         files.forEach(input => {
             if (input.files && input.files[0]) {
                 if (input.files[0].size > MAX_SIZE) {
                     fileTooLarge = true;
+                    // Opcional: destaca o input com erro
+                    input.parentElement.classList.add('border-red-500');
                 }
             }
         });
 
         if (fileTooLarge) {
-            e.preventDefault();
+            e.preventDefault(); // Bloqueia o envio para a Vercel
             sizeModal.classList.remove('hidden');
         }
     });
 
-    // Fechar modal ao clicar fora dele
+    // Fechar modal ao clicar fora
     sizeModal.addEventListener('click', (e) => {
         if (e.target === sizeModal) closeSizeModal();
     });
