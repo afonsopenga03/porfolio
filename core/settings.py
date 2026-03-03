@@ -160,11 +160,7 @@ EMAIL_HOST_PASSWORD = 'afonsooooo'
 DEFAULT_FROM_EMAIL = 'gregbrizzy@gmail.com'
 
 # Configuração do Cloudinary (Pegue as chaves no site deles)
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'gregbrizzy',
-    'API_KEY': '453352456264466',
-    'API_SECRET': 'y6AOCPQRHsgZPru1PswuBjQSMKc'
-}
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
