@@ -1,4 +1,3 @@
- 
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <section id="trabalhos" class="py-24 lg:py-36" x-data="{ activeCategory: 'all' }">
@@ -37,12 +36,13 @@
             <div x-show="activeCategory === 'all' || activeCategory === '{{ project.category.slug }}'"
                  x-transition:enter="transition duration-500 ease-out"
                  x-transition:enter-start="opacity-0 scale-95"
-                 class="reveal project-item"
+                 class="reveal project-item w-full"
                  data-category="{{ project.category.slug }}">
                 
-                <a href="{% url 'project_detail' project.slug %}" class="group block card-hover bg-elevated rounded-3xl overflow-hidden border border-border h-full flex flex-col">
+                <a href="{% url 'project_detail' project.slug %}" 
+                   class="group block card-hover bg-elevated rounded-3xl overflow-hidden border border-border h-full flex flex-col w-full">
                     
-                    <div class="relative w-full aspect-video (16/9) overflow-hidden bg-[#0A0A0A]">
+                    <div class="relative w-full aspect-video overflow-hidden bg-[#0A0A0A]">
                         {% with project.images.first as main_image %}
                             {% if main_image %}
                                 <img src="{{ main_image.image.url }}" 
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="p-6 flex-grow flex flex-col">
+                    <div class="p-6 flex-grow flex flex-col w-full">
                         <div class="flex items-center gap-2 mb-2.5">
                             <span class="text-[10px] font-mono font-semibold text-accent uppercase tracking-wider">{{ project.category.name }}</span>
                             <span class="text-[10px] text-muted">— {{ project.created_at|date:"Y" }}</span>
@@ -94,5 +94,8 @@
 
 <style>
     [x-cloak] { display: none !important; }
+    /* Garante que o grid mantenha o alinhamento mesmo com transições */
+    .project-item {
+        height: 100%;
+    }
 </style>
- 
