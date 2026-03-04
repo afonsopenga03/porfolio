@@ -42,12 +42,12 @@
                 
                 <a href="{% url 'project_detail' project.slug %}" class="group block card-hover bg-elevated rounded-3xl overflow-hidden border border-border h-full flex flex-col">
                     
-                    <div class="relative w-full aspect-video overflow-hidden bg-[#0A0A0A]">
+                    <div class="relative w-full overflow-hidden bg-[#0A0A0A">
     {% with project.images.first as main_image %}
         {% if main_image %}
             <img src="{{ main_image.image.url }}" 
                  alt="{{ project.title }}" 
-                 class="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
+                 class="w-full h-auto block transition-transform duration-700 group-hover:scale-105">
         {% else %}
             <div class="absolute inset-0 w-full h-full flex items-center justify-center bg-surface">
                 <span class="text-muted font-mono text-xs">Sem imagem disponível</span>
