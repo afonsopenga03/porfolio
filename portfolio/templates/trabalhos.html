@@ -42,18 +42,20 @@
                 
                 <a href="{% url 'project_detail' project.slug %}" class="group block card-hover bg-elevated rounded-3xl overflow-hidden border border-border h-full flex flex-col">
                     
-                    <div class="relative w-full aspect-video (16/9) overflow-hidden bg-[#0A0A0A]">
-                        {% with project.images.first as main_image %}
-                            {% if main_image %}
-                                <img src="{{ main_image.image.url }}" 
-                                     alt="{{ project.title }}" 
-                                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            {% else %}
-                                <div class="absolute inset-0 w-full h-full flex items-center justify-center bg-surface">
-                                    <span class="text-muted font-mono text-xs">Sem imagem disponível</span>
-                                </div>
-                            {% endif %}
-                        {% endwith %}
+                    <div class="relative w-full aspect-video overflow-hidden bg-[#0A0A0A]">
+    {% with project.images.first as main_image %}
+        {% if main_image %}
+            <img src="{{ main_image.image.url }}" 
+                 alt="{{ project.title }}" 
+                 class="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
+        {% else %}
+            <div class="absolute inset-0 w-full h-full flex items-center justify-center bg-surface">
+                <span class="text-muted font-mono text-xs">Sem imagem disponível</span>
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    </div>
 
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         
